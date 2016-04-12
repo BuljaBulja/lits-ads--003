@@ -19,7 +19,7 @@ fs.readFile(path + '.in', 'utf8', function(err, data) {
     return result + currPrise
   }, 0);
 
-  fs.writeFile(path + '.out', totalPrise, 'utf8');
+  fs.writeFile(path + '.out', totalPrise.toFixed(2), 'utf8');
 });
 
 // Insertion sort realisation.
