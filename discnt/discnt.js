@@ -24,17 +24,17 @@ fs.readFile(path + '.in', 'utf8', function(err, data) {
 
 // Insertion sort realisation.
 function insertionSort(array) {
-  var arrayKeys = Object.keys(array);
-  
-  arrayKeys.shift();
-  arrayKeys.forEach(function(idxKey) {
-    var currPos = idxKey;
+  var i = 1,
+    currPos;
+
+  for (;i < array.length; i++) {
+    currPos = i;
 
     for (;currPos && revertCompare(array[currPos], array[currPos - 1]);) {
       swap(array, currPos, currPos - 1);
       currPos--;
     }
-  });
+  }
 }
 
 // Used to find if firt value larger than second.
