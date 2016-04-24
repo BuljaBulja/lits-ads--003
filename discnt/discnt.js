@@ -7,13 +7,19 @@ let fileName = process.argv[2] || 'discnt',
   path = __dirname + '/' + fileName;
 
 fs.readFile(path + '.in', 'utf8', (err, data) => {
+  const sortingDivider = 20;
+
   let fileData = data.split('\n'),
     prices = fileData[0].split(' ').map(x => parseInt(x, 10)),
     discount = parseInt(fileData[1], 10),
     discItemsCount = parseInt(prices.length/3),
     totalPrise;
 
-  sorting.mergeSort(prices, (a, b) => a > b);
+  if (prices.length < sortingDivider) {
+    sorting.insertionSort(prices, (a, b) => a > b);
+  } else {
+    sorting.mergeSort(prices, (a, b) => a > b);
+  }
 
   totalPrise = prices.reduce((result, item, index) => {
     let currPrise = discItemsCount > index ?
