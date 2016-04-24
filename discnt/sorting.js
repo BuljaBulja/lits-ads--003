@@ -4,7 +4,8 @@ module.exports = {
   selectionSort: selectionSort,
   insertionSort: insertionSort,
   bubbleSort: bubbleSort,
-  mergeSort: mergeSort
+  mergeSort: mergeSort,
+  quickSort: quickSort
 }
 
 
@@ -107,6 +108,44 @@ function mergeSort(array, compareFunc) {
     }
 
     return resultArr;
+  }
+}
+
+function quickSort(array, compareFunc) {
+  sortRecursive(array, 0, array.length - 1);
+
+  function sortRecursive(array, left, right) {
+    let pivot = getPivot(array, left, right),
+      leftPos = left,
+      rightPos = right;
+
+    while (leftPos <= rightPos) {
+      while (compareFunc(array[leftPos], pivot)) {
+        leftPos++;
+      }
+
+      while (compareFunc(pivot, array[rightPos])) {
+        rightPos--;
+      }
+
+      if (leftPos <= rightPos) {
+        swap(array, leftPos, rightPos);
+        leftPos++;
+        rightPos--;
+      }
+    }
+
+    if (left < leftPos - 1) {
+      sortRecursive(array, left, leftPos - 1)
+    }
+
+    if (leftPos < right) {
+      sortRecursive(array, leftPos, right);
+    }
+  }
+
+  function getPivot(array, left, right) {
+    return array[left];
   }
 }
 
