@@ -3,7 +3,8 @@
 module.exports = {
   selectionSort: selectionSort,
   insertionSort: insertionSort,
-  bubbleSort: bubbleSort
+  bubbleSort: bubbleSort,
+  mergeSort: mergeSort
 }
 
 
@@ -50,6 +51,62 @@ function bubbleSort(array, compareFunc) {
         isSorted = false;
       }
     }
+  }
+}
+
+function mergeSort(array, compareFunc) {
+  sortRecursive(array, 0, array.length - 1).forEach((value, index) => {
+    array[index] = value;
+  });
+
+  function sortRecursive(array, left, right) {
+    let mergedArr, middle, leftArr, rightArr;
+
+    if (left < right) {
+      middle = Math.floor((left + right) / 2);
+
+      leftArr = sortRecursive(array, left, middle);
+      rightArr = sortRecursive(array, middle + 1, right);
+
+      mergedArr = merge(leftArr, rightArr);
+    } else {
+      mergedArr = [array[left]];
+    }
+
+    return mergedArr;
+  }
+
+  function merge(leftArr, rightArr) {
+    let resultArr = new Array(leftArr.length + rightArr.length),
+      leftPos, rightPos, resultPos;
+
+    leftPos = rightPos = resultPos = 0;
+
+    while (leftPos < leftArr.length && rightPos < rightArr.length) {
+      if (compareFunc(leftArr[leftPos], rightArr[rightPos])) {
+        resultArr[resultPos] = leftArr[leftPos];
+        leftPos++;
+      } else {
+        resultArr[resultPos] = rightArr[rightPos];
+        rightPos++;
+      }
+
+      resultPos++;
+    }
+
+    while (leftPos < leftArr.length) {
+      resultArr[resultPos] = leftArr[leftPos];
+      leftPos++;
+      resultPos++;
+    }
+
+    while (rightPos < rightArr.length) {
+      resultArr[resultPos] = rightArr[rightPos];
+      rightPos++;
+      resultPos++;
+    }
+
+    return resultArr;
   }
 }
 

@@ -13,7 +13,7 @@ fs.readFile(path + '.in', 'utf8', (err, data) => {
     discItemsCount = parseInt(prices.length/3),
     totalPrise;
 
-  sorting.insertionSort(prices, (a, b) => a > b);
+  sorting.mergeSort(prices, (a, b) => a > b);
 
   totalPrise = prices.reduce((result, item, index) => {
     let currPrise = discItemsCount > index ?
