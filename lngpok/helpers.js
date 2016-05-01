@@ -94,7 +94,7 @@ function findCombo(deck, offset) {
     let jokers = cashedJokers,
       count = 0;
 
-    if (deck[i]) {
+    if (deck[i] || deck.length === 1) {
       for (let j = i; j < deck.length + cashedJokers; j++) {
 
         if (deck[j]) {
