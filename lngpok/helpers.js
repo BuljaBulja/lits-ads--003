@@ -93,18 +93,22 @@ function findCombo(deck, offset) {
   for (let i = offset; i <= deck.length; i++) { 
     let jokers = cashedJokers,
       count = 0;
-    for (let j = i; j < deck.length + cashedJokers; j++) {
-      if (deck[j]) {
-        count++;
-      } else if (jokers) {
-        jokers--;
-        count++;
-      } else {
-        break;
-      }
-    }
 
-    maxCount = maxCount > count ? maxCount : count;
+    if (deck[i]) {
+      for (let j = i; j < deck.length + cashedJokers; j++) {
+
+        if (deck[j]) {
+          count++;
+        } else if (jokers) {
+          jokers--;
+          count++;
+        } else {
+          break;
+        }
+      }
+
+      maxCount = maxCount > count ? maxCount : count;
+    }
   }
 
   return maxCount;
