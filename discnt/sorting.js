@@ -5,7 +5,8 @@ module.exports = {
   insertionSort: insertionSort,
   bubbleSort: bubbleSort,
   mergeSort: mergeSort,
-  quickSort: quickSort
+  quickSort: quickSort,
+  countingSort: countingSort
 }
 
 
@@ -147,6 +148,30 @@ function quickSort(array, compareFunc) {
   function getPivot(array, left, right) {
     return array[left];
   }
+}
+
+function countingSort(array, min) {
+  const offset = min;
+
+  let countArray = [],
+    newArrCouter = 0;
+
+  for (let i = 0; i < array.length; i++) {
+    if (!countArray[array[i] - offset]) {
+      countArray[array[i] - offset] = 1;
+    } else {
+      countArray[array[i] - offset]++;
+    }
+  }
+
+  for (let i = 0; i < countArray.length; i++) {
+    while (countArray[i]--) {
+      array[newArrCouter] = i + offset; 
+      newArrCouter++;
+    }
+  }
+
+  return countArray;
 }
 
 function swap(arr, i, j) {
