@@ -4,7 +4,7 @@ const fs = require('fs'),
   Hamster = require('./hamster.js'),
   Cage = require('./cage.js');
 
-let fileName = process.argv[2] || 'lngpok',
+let fileName = process.argv[2] || 'hamstr',
   path = __dirname + '/' + fileName;
 
 fs.readFile(path + '.in', 'utf8', (err, data) => {
@@ -16,7 +16,7 @@ fs.readFile(path + '.in', 'utf8', (err, data) => {
 
     cage.addHamster(new Hamster(hamsterInfo));
 
-    if (cage.totalFood < cage.countTotalHunger()) {
+    if (cage.availableFood < cage.countTotalHunger()) {
       cage.leaveHungriestHamster();
     }
   }
