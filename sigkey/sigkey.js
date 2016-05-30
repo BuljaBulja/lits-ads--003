@@ -40,6 +40,5 @@ fs.readFile(path + '.in', 'utf8', (err, data) => {
     }
   }
 
-  console.log(result);
-  // fs.writeFile(path + '.out', result, 'utf8');
+  fs.writeFile(path + '.out', result, 'utf8');
 });
