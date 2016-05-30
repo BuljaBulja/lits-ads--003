@@ -7,22 +7,26 @@ let fileName = process.argv[2] || 'sigkey',
 
 fs.readFile(path + '.in', 'utf8', (err, data) => {
   let fileData = data.split('\n'),
+    keysCount = fileData[0],
     firstChar = 97,
     charsCount = 26,
     result = 0,
     charsMap = [],
-    keys = [];
+    keysMap = {},
+    keysArr;
 
   for (var i = 97; i < 97 + 26; i++) {
     charsMap.push(String.fromCharCode(i));
   }
 
   for (let i = 1; i < fileData.length - 1; i++) {
-    keys.push(fileData[i].split('').sort().join(''));
+    keysMap[fileData[i].split('').sort().join('')] = true;
   }
 
-  for (let i = 0; i < keys.length; i++) {
-    let key = keys[i],
+  keysArr = Object.keys(keysMap);
+
+  for (let i = 0; i < keysCount; i++) {
+    let key = keysArr[i],
       neededString = '';
 
     for(let j = 0; j <= charsMap.indexOf(key[key.length - 1]); j++) {
@@ -31,10 +35,11 @@ fs.readFile(path + '.in', 'utf8', (err, data) => {
       }
     }
 
-    if (keys.indexOf(neededString) !== -1) {
+    if (keysMap[neededString]) {
       result++;
     }
   }
 
-  fs.writeFile(path + '.out', result, 'utf8');
+  console.log(result);
+  // fs.writeFile(path + '.out', result, 'utf8');
 });
