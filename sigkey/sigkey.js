@@ -15,7 +15,7 @@ fs.readFile(path + '.in', 'utf8', (err, data) => {
     keysMap = {},
     keysArr;
 
-  for (var i = 97; i < 97 + 26; i++) {
+  for (var i = firstChar; i < firstChar + charsCount; i++) {
     charsMap.push(String.fromCharCode(i));
   }
 
