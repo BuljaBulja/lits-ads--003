@@ -1,9 +1,9 @@
 'use strict';
 
-function Graph(vertices, edges, verticesCount) {
+function Graph(vertices, edges, primaryVertices) {
   this.vertices = vertices;
   this.edges = edges;
-  this.verticesCount = verticesCount;
+  this.primaryVertices = primaryVertices;
 }
 
 module.exports = Graph;
