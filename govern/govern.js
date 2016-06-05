@@ -21,8 +21,8 @@ function shapeDAG(data) {
   let edgesCount = data.length - 1,
     vertices = {},
     edges = [],
-    primaryVertices = [],
-    verticesKeys, startVertex, endVertex, edgeData, currEdge;
+    verticesCount = 0,
+    startVertex, endVertex, edgeData, currEdge;
 
   for (let i = 0; i < edgesCount; i++) {
     edgeData = data[i].split(' ');
@@ -31,37 +31,35 @@ function shapeDAG(data) {
 
     if (!vertices.hasOwnProperty(startVertex)) {
       vertices[startVertex] = new Vertex(startVertex);
+      verticesCount++;
     }
 
     if (!vertices.hasOwnProperty(endVertex)) {
       vertices[endVertex] = new Vertex(endVertex);
+      verticesCount++;
     }
 
     currEdge = new Edge(startVertex, endVertex);
 
     vertices[startVertex].addEdge(currEdge);
-    vertices[endVertex].hasParent = true;
     edges.push(currEdge);
   }
 
-  verticesKeys = Object.keys(vertices);
-
-  for (let i = 0; i < verticesKeys.length; i++) {
-    if (!vertices[verticesKeys[i]].hasParent) {
-      primaryVertices.push(vertices[verticesKeys[i]].label);
-    }
-  }
-
-  return new Graph(vertices, edges, primaryVertices);
+  return new Graph(vertices, edges, verticesCount);
 }
 
 function tarjanDfs(graph) {
   let correctOrder = [],
     visited = {},
-    resultString = '';
+    resultString = '',
+    currVertex;
 
-  for(let i = 0; i < graph.primaryVertices.length; i++) {
-    dfs(graph.vertices[graph.primaryVertices[i]]);
+  for (let i = 0; i < graph.verticesCount; i++) {
+    currVertex = graph.vertices[Object.keys(graph.vertices)[i]];
+
+    if (!visited[currVertex.label]) {
+      dfs(currVertex);
+    }
   }
 
   return resultString;
@@ -92,6 +90,20 @@ function tarjanDfs(graph) {
         stack.push(vertex);
         stack = stack.concat(unvisitedNeighbors);
       }
+    }
+  }
+
+  function dfsRecursive(vertex) {
+    let edges = vertex.getEdges();
+
+    if (!visited[vertex.label]) {
+      visited[vertex.label] = true;
+
+      for (let i = 0; i < edges.length; i++) {
+        dfsRecursive(graph.vertices[edges[i].endVertex]);
+      }
+
+      correctOrder.push(vertex.label)
     }
   }
 }

@@ -2,7 +2,6 @@
 
 function Vertex(label) {
   this.label = label;
-  this.hasParent = false;
   this.outboundEdges = [];
 }
 
