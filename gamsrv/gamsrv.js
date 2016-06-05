@@ -14,9 +14,7 @@ fs.readFile(path + '.in', 'utf8', (err, data) => {
   let graph = shapeGraph(fileData),
     shortestDistance = getShortestDistance(graph);
 
-  console.log(shortestDistance);
-
-  // fs.writeFile(path + '.out', verticesOrder, 'utf8');
+  fs.writeFile(path + '.out', shortestDistance, 'utf8');
 });
 
 function shapeGraph(data) {
@@ -74,7 +72,7 @@ function getShortestDistance(graph) {
       resultArray.push(Math.max.apply(Math, currVertexDist));
     }
   }
-  console.log(graph.vertices);
+
   return Math.min.apply(Math, resultArray);
 }
 
