@@ -14,7 +14,7 @@ fs.readFile(path + '.in', 'utf8', (err, data) => {
   let graph = shapeDAG(fileData),
     verticesOrder = tarjanDfs(graph);
 
-  fs.writeFile(path + '2.out', verticesOrder, 'utf8');
+  fs.writeFile(path + '.out', verticesOrder, 'utf8');
 });
 
 function shapeDAG(data) {
