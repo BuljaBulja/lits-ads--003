@@ -14,7 +14,7 @@ fs.readFile(path + '.in', 'utf8', (err, data) => {
   let graph = shapeDAG(fileData),
     verticesOrder = tarjanDfs(graph);
 
-  fs.writeFile(path + '.out', verticesOrder, 'utf8');
+  fs.writeFile(path + '2.out', verticesOrder, 'utf8');
 });
 
 function shapeDAG(data) {
@@ -50,7 +50,7 @@ function shapeDAG(data) {
 
 function tarjanDfs(graph) {
   let orderSet = new Set(),
-    unvisitedVertices = new Set(Object.keys(graph.vertices)),
+    unvisitedVertices = new Set(Object.keys(graph.vertices).reverse()),
     unvisitedVerIter = unvisitedVertices.values(),
     visited = {},
     resultString = '',
