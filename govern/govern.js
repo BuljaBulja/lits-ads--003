@@ -49,17 +49,15 @@ function shapeDAG(data) {
 }
 
 function tarjanDfs(graph) {
-  let correctOrder = [],
+  let orderSet = new Set(),
+    unvisitedVertices = new Set(Object.keys(graph.vertices)),
+    unvisitedVerIter = unvisitedVertices.values(),
     visited = {},
     resultString = '',
     currVertex;
 
-  for (let i = 0; i < graph.verticesCount; i++) {
-    currVertex = graph.vertices[Object.keys(graph.vertices)[i]];
-
-    if (!visited[currVertex.label]) {
-      dfs(currVertex);
-    }
+  while (unvisitedVertices.size) {
+    dfs(graph.vertices[unvisitedVerIter.next().value]);
   }
 
   return resultString;
@@ -74,6 +72,9 @@ function tarjanDfs(graph) {
       edges = vertex.getEdges();
 
       visited[vertex.label] = true;
+      if (unvisitedVertices.has(vertex.label)) {
+        unvisitedVertices.delete(vertex.label);
+      }
 
       for (let i = 0; i < edges.length; i++) {
         if (!visited[edges[i].endVertex]) {
@@ -82,28 +83,14 @@ function tarjanDfs(graph) {
       }
 
       if (!unvisitedNeighbors.length) {
-        if (correctOrder.indexOf(vertex.label) === -1) {
-          correctOrder.push(vertex.label);
+        if (!orderSet.has(vertex.label)) {
+          orderSet.add(vertex.label);
           resultString += vertex.label + '\n';
         }
       } else {
         stack.push(vertex);
         stack = stack.concat(unvisitedNeighbors);
       }
-    }
-  }
-
-  function dfsRecursive(vertex) {
-    let edges = vertex.getEdges();
-
-    if (!visited[vertex.label]) {
-      visited[vertex.label] = true;
-
-      for (let i = 0; i < edges.length; i++) {
-        dfsRecursive(graph.vertices[edges[i].endVertex]);
-      }
-
-      correctOrder.push(vertex.label)
     }
   }
 }
